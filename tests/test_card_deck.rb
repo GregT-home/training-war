@@ -34,33 +34,5 @@ class TestCardDeck < MiniTest::Unit::TestCase
     assert_equal(player1.number_of_cards,player2.number_of_cards)
   end
 
-  def test_game_play
-    war=WarGame.new
-
-    player1=WarPlayer.new
-    player2=WarPlayer.new
-
-    if war.play_game(player1,player2) == player1
-      print "Player1 won in #{war.iterations_until_won}\n"
-    else
-      print "Player2 won in #{war.iterations_until_won}\n"
-    end
-  end
-
-  def test_multiple_game_play
-    def play_one_game
-      war=WarGame.new
-
-      player1=WarPlayer.new
-      player2=WarPlayer.new
-
-      if war.play_game(player1,player2) == player1
-        print "Player1 won in #{war.iterations_until_won}\n"
-      else
-        print "Player2 won in #{war.iterations_until_won}\n"
-      end
-    end
-    50.times { play_one_game }
-  end #test multiple game play
 end # TestCardDeck
 

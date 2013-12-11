@@ -1,11 +1,12 @@
 class WarGame
- @iterations_until_won
+  @iterations_until_won
+  @debug
 
-  def  initialize
+  def  initialize(debug=0)
     @iterations_until_won = 1
   end
   
-  def play_round(player1, player2, escrow=[])
+  def battle(player1, player2, escrow=[])
     card1=player1.take_top_card
     card2=player2.take_top_card
 
@@ -14,6 +15,13 @@ class WarGame
         player1.merge_won_into_cards
         card1=player1.take_top_card
       end
+
+      # if player 1 is still out of cards after a warchest recharge, then he loses
+      if (card1 == NIL)
+        escrow.push(card2) if card2 != NIL
+        player2.wins_card(escrow.pop)
+        return player2
+      end
     end
 
     if card2 == NIL
@@ -21,27 +29,16 @@ class WarGame
         player2.merge_won_into_cards
         card2=player2.take_top_card
       end
+
+      # if player 2 is out of cards after a warchest recharge, then he loses
+      if (card2 == NIL)
+        escrow.push(card1) if card1 != NIL
+        player1.wins_card(escrow.pop)
+        return player1
+      end
     end
     
-    # if player 1 is out of cards after a warchest recharge, then he loses
-    if (card1 == NIL)
-      escrow.push(card2) if card2 != NIL
-      player2.wins_card(escrow.pop)
-      return player2
-    end
-
-    # if player 2 is out of cards after a warchest recharge, then he loses
-    if (card2 == NIL)
-      escrow.push(card1) if card1 != NIL
-      player1.wins_card(escrow.pop)
-      return player1
-    end
-
-    
-    raise("Both players are out of cards") if card1 == NIL && card2 == NIL
-    raise("Player 1 is out of cards") if card1 == NIL
-    raise("Player 2 is out of cards") if card2 == NIL
-
+    # put the cards into escrow pending the outcome of the battle
     escrow.push(card1, card2)
     
     # player 1 wins
@@ -55,12 +52,12 @@ class WarGame
              player2.wins_card(escrow.pop)
            end
          else
-           play_round(player1, player2, escrow)
+           battle(player1, player2, escrow)
          end
     end
   end
 
-  def play_game(player1, player2, test_deck=[])
+  def make_war(player1, player2, test_deck=[])
     game_deck=CardDeck.new
     game_deck.shuffle
 
@@ -77,7 +74,7 @@ class WarGame
     
     while player1.number_of_cards > 0 && player2.number_of_cards > 0
       @iterations_until_won += 1
-      play_round(player1, player2)
+      battle(player1, player2)
     end
 
     if player1.number_of_cards > 0
@@ -85,7 +82,7 @@ class WarGame
     else
       player2
     end
-end
+  end
 
   def iterations_until_won
     @iterations_until_won

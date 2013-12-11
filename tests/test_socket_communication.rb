@@ -22,9 +22,9 @@ class Test_Socket_Ops < MiniTest::Unit::TestCase
     server = TCPSocket.new("localhost", port)
     line = server.gets
     puts line
-    
-
   end
+
+
 
 end # Test_Socket_Ops
 
