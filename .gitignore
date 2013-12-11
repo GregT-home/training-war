@@ -16,7 +16,10 @@ tmp
 .yardoc
 _yardoc
 doc/
+# Emacs artifacts
 \#*
 .#*
-*.out
 *~
+# personal artifacts
+bogus*
+*.out

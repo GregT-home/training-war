@@ -8,42 +8,34 @@ class TestWar < MiniTest::Unit::TestCase
   end  
 
   def test_player1_wins
-#   printf "Testing %s...", __method__
-    player1=WarPlayer.new([PlayingCard.new('A')])
-    player2=WarPlayer.new([PlayingCard.new('2')])
+    player1=WarPlayer.new([PlayingCard.new('A','C')])
+    player2=WarPlayer.new([PlayingCard.new('2','S')])
     @war.play_round(player1,player2)
     # winning player should have both cards
     assert_equal(2, player1.number_of_cards)
     assert_equal(0, player2.number_of_cards)
-#    print "Success!\n"
   end
-
+  
   def test_player2_wins
-#    printf "Testing %s...", __method__
-    player1=WarPlayer.new([PlayingCard.new('7')])
-    player2=WarPlayer.new([PlayingCard.new('K')])
+    player1=WarPlayer.new([PlayingCard.new('7','D')])
+    player2=WarPlayer.new([PlayingCard.new('K','D')])
     @war.play_round(player1,player2)
     # winning player should have both cards
     assert_equal(0, player1.number_of_cards)
     assert_equal(2, player2.number_of_cards)
-#    print "Success!\n"
   end
 
   def test_players_tie
-#    printf "Testing %s...", __method__
-    player1=WarPlayer.new([PlayingCard.new('K'),
-                           PlayingCard.new('7'),
-                           PlayingCard.new('9')])
-    player2=WarPlayer.new([PlayingCard.new('A'),
-                           PlayingCard.new('7'),
-                           PlayingCard.new('9')])
+    player1=WarPlayer.new([PlayingCard.new('K','H'),
+                           PlayingCard.new('7','S'),
+                           PlayingCard.new('9','C')])
+    player2=WarPlayer.new([PlayingCard.new('A','H'),
+                           PlayingCard.new('7','D'),
+                           PlayingCard.new('9','S')])
     @war.play_round(player1,player2)
-    # winning player should have both cards
+    # winning player should have all  cards
     assert_equal(0, player1.number_of_cards)
     assert_equal(6, player2.number_of_cards)
-
-#    print "Success!\n"
   end
 
-  
 end

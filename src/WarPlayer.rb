@@ -1,7 +1,7 @@
 class WarPlayer
   attr_reader :cards
   
-  def initialize(cards)
+  def initialize(cards=[])
     @cards = cards
   end
 
@@ -14,8 +14,11 @@ class WarPlayer
   end
 
   def receive_card(newcard)
-    @cards.push(newcard)
-#    print "received card ", newcard.value
+    @cards.unshift(newcard)
+  end
+
+  def shuffle
+    @cards.shuffle!
   end
   
 end # WarPlayer
