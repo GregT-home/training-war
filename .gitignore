@@ -23,3 +23,5 @@ doc/
 # personal artifacts
 bogus*
 *.out
+[Mm]akefile*
+notes.txt.rb
