@@ -60,7 +60,7 @@ class TestCardDeck < MiniTest::Unit::TestCase
         print "Player2 won in #{war.iterations_until_won}\n"
       end
     end
-    500.times { play_one_game }
+    50.times { play_one_game }
   end #test multiple game play
 end # TestCardDeck
 
