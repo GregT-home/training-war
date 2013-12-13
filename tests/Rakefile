@@ -1,0 +1,5 @@
+require "ruby/clean"
+task :default
+  puts "Bell is ringing."
+
+

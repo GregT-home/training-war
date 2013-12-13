@@ -12,4 +12,8 @@ end
     RANKS.index(@rank)
     # suit is currently ignored
   end
+
+  def name
+    "#{@rank} of #{@suit}"
+  end
 end # PlayingCard

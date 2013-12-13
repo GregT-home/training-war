@@ -9,7 +9,7 @@ class TestGamePlay < MiniTest::Unit::TestCase
     player1=WarPlayer.new
     player2=WarPlayer.new
 
-    if war.make_war(player1,player2) == player1
+    if war.make_war([player1,player2]) == player1
       print "Player1 won in #{war.iterations_until_won}\n"
     else
       print "Player2 won in #{war.iterations_until_won}\n"
@@ -23,14 +23,14 @@ class TestGamePlay < MiniTest::Unit::TestCase
       player1=WarPlayer.new
       player2=WarPlayer.new
 
-      if war.make_war(player1,player2) == player1
+      if war.make_war([player1,player2]) == player1
         print "Player1 won in #{war.iterations_until_won}\n"
       else
         print "Player2 won in #{war.iterations_until_won}\n"
       end
     end
 
-    repeat=50
+    repeat=3
     repeat.times { play_one_game }
 
     # if we got this far with a winner in each case, we are declaring victory

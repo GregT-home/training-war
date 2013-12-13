@@ -1,0 +1,53 @@
+require 'socket'
+class WarClient
+	def connect(hostname='localhost',port=1337)
+		@player = TCPSocket.open(hostname,port)
+	end
+	def send(message)
+		@player.puts message				
+	end
+	def play
+		puts @player.gets.chomp #welcome
+		puts @player.gets.chomp #welcome
+		puts @player.gets.chomp #welcome
+		while !(enter_statement = @player.gets).nil? 
+			puts enter_statement.chomp # enter to continue message
+			@player.puts gets		#input
+			puts @player.gets.chomp #hand messages
+			puts @player.gets.chomp #hand messages
+			puts @player.gets.chomp #hand messages
+			player1_cards = @player.gets.chomp #hand messages
+			puts player1_cards
+			player2_cards = @player.gets.chomp #hand messages
+			puts player2_cards
+			puts @player.gets.chomp #hand messages
+			if player1_cards.split[3].to_i == 0
+				winner = "player 2"
+			elsif player2_cards.split[3].to_i == 0
+				winner = "player 1"
+			end
+		end
+		winner ||= "error no winner"
+		puts "#{winner} has won the game!"
+	end
+end
+
+if __FILE__ == $0
+puts "          		 ~~~THIS IS WAR~~~"
+puts "--------------------------------------------------------"
+puts "Player 1 press [ENTER] to play card & start game"
+puts "after player 2 has joined."
+puts "NOTE: if no prompt appears it means game is in progress"
+puts "\n"
+puts "After placing other card wait for other player to place"
+puts "their card to see outcome of the hand"
+puts "--------------------------------------------------------\n\n"
+client = WarClient.new
+puts "Please enter the host you wish to connect to"
+host=gets.chomp
+client.connect(host)
+client.play
+end	
+#todo for client
+#
+#allow client to access the comand interface and return proper commands when prompted

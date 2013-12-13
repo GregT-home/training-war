@@ -1,10 +1,21 @@
 class WarPlayer
+  attr_reader :interactive
   attr_reader :active_cards
   attr_reader :won_cards
+  attr_reader :name
+  @server_fd
 
-  def initialize(active_cards=[])
+  @debug=false
+  def debug_toggle
+    @debug = ! @debug
+  end
+
+  def initialize(active_cards=[], name = "Unnamed Player", interactive=false)
+    @name = name
     @active_cards = active_cards
     @won_cards = []
+    @interactive = interactive
+#    @server_fd = TCPSocket.new("localhost", WarGame_Server::OUR_PORT)
   end
 
   def number_of_cards
@@ -36,6 +47,18 @@ class WarPlayer
   def shuffle
     @active_cards.shuffle!
   end
-  
+
+  def ask_to_play(prompt)
+    return "" unless @interactive
+
+    puts(prompt)
+    gets
+  end
+
+  def report(msg)
+    if @interactive
+      print "             (#{ '%10s' % name}): #{msg}\n"
+    end
+  end  
 end # WarPlayer
-  
+

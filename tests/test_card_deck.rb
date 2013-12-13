@@ -6,14 +6,17 @@ class TestCardDeck < MiniTest::Unit::TestCase
   def test_deck_shuffle
     test_deck = CardDeck.new
     shuffled_deck = CardDeck.new
+    player=WarPlayer.new
 
     assert_equal(52, test_deck.number_of_cards)
     assert_equal(52, shuffled_deck.number_of_cards)
-    assert(test_deck.deal.is_a?(PlayingCard))
-    assert(shuffled_deck.deal.is_a?(PlayingCard))
-    #    assert_equal(test_deck, shuffled_deck)
-    #    shuffled_deck.shuffle
-    #    assert_not_equal(test_deck, shuffled_deck)
+    test_deck.deal([player])
+    card = player.take_top_card
+    assert(card.is_a?(PlayingCard), "card is not a playing card")
+    shuffled_deck.deal([player])
+    card = player.take_top_card
+    assert(card.is_a?(PlayingCard), "card is not a playing card")
+
   end
 
   def test_deal
@@ -23,11 +26,8 @@ class TestCardDeck < MiniTest::Unit::TestCase
 
     game_deck.shuffle
     
-    # deal the cards evenly
-    while game_deck.number_of_cards > 0
-      player1.receive_card(game_deck.take_top_card)
-      player2.receive_card(game_deck.take_top_card)
-    end
+    # deal the cards
+    game_deck.deal([player1, player2])
 
     assert_equal(0, game_deck.number_of_cards)
     assert_equal(26, player1.number_of_cards)
