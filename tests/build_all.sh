@@ -10,7 +10,7 @@ test_interactive_game_play.rb
 for i in $list
 do
     echo "ruby $i"
-    ruby $i || {
+    yes "" | ruby $i || {
 	echo "?Error: stopping build"; exit
     }
     echo "---------------------------"

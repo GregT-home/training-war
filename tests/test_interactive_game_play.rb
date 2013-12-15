@@ -13,14 +13,14 @@ class Test_Interactive_Play < MiniTest::Unit::TestCase
   end
 
   def test_player_type_can_be_seen
-    player = WarPlayer.new("Player 1", [], false)
+    player = WarPlayer.new([], "Player 1", false)
 
     assert_equal(player.interactive, false, "created player is interactive!")
   end
 
   def test_player_can_be_asked_something
     skip ("works, but want to avoid interactivity for a while")
-    player = WarPlayer.new("Player 1", [], true)
+    player = WarPlayer.new([], "Player 1", true)
     
     assert_equal(player.interactive, true, "created player is non-interactive!")
     
@@ -30,15 +30,6 @@ class Test_Interactive_Play < MiniTest::Unit::TestCase
     refute_equal(nil, response, "Response was nil!")
   end
 
-  # def test_player_request_is_properly_limited
-  #   skip "not ready"
-  #   player = WarPlayer.new(name="Player 1", interactive=true)
-  #    
-  # response = player.ask_to_play("prompt text")
-  # assert (response == "" || response == "q",
-  #             "player.ask_to_play response not limited properly")
-  # end
-  
   def test_game_play_with_interactive_player
     war=WarGame.new
 
@@ -47,18 +38,18 @@ class Test_Interactive_Play < MiniTest::Unit::TestCase
 
     result = war.make_war([player1,player2],
                           [
-                           PlayingCard.new('2','H'),
                            PlayingCard.new('A','H'),
-                           PlayingCard.new('2','S'),
+                           PlayingCard.new('2','H'),
                            PlayingCard.new('A','D'),
-                           PlayingCard.new('2','C'),
-                           PlayingCard.new('A','S') ]
-                          )
+                           PlayingCard.new('2','S'),
+                           PlayingCard.new('A','S'),
+                           PlayingCard.new('2','C')
+                          ] )
 
     if result == player1
-      print "#{player1.name} wins in #{war.iterations_until_won}\n"
+      print "#{player1.name} wins in #{war.battle_number}\n"
     else
-      print "#{player1.name} wins in #{war.iterations_until_won}\n"
+      print "#{player1.name} wins in #{war.battle_number}\n"
     end
   end
 
@@ -66,7 +57,7 @@ class Test_Interactive_Play < MiniTest::Unit::TestCase
     war = WarGame.new
     war.toggle_debug
 
-    player = WarPlayer.new([], 'Player 1", false)
+    player = WarPlayer.new([], "Player 1", false)
 
     test_msg = "Ready to Play!"
     player.report test_msg

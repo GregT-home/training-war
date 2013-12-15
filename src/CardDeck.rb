@@ -20,7 +20,7 @@ class CardDeck
 
   def deal(players)
     while number_of_cards > 0
-      players.each { | player |  player.receive_card(take_top_card) }
+      players.each { | player | player.receive_card(take_top_card) }
     end
   end
 

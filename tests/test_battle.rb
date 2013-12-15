@@ -7,6 +7,21 @@ class TestWar < MiniTest::Unit::TestCase
     @war=WarGame.new
   end  
 
+  def test_execution_of_code_block
+    player1=WarPlayer.new([PlayingCard.new('A','C')], "P1")
+    player2=WarPlayer.new([PlayingCard.new('2','S')], "P1")
+    @war.battle([player1,player2]) { | card1, card2, i |
+      print "\nfrom code block:\n"
+      print "card 1 = #{card1.name}, card 2 = #{card2.name} in round #{i}\n"
+      print  "P1 has #{player1.number_of_cards} card#{player1.number_of_cards != 1 ? 's' : ''}\n"
+      print "P2 has #{player2.number_of_cards} card#{player2.number_of_cards != 1 ? 's' : ''  }\n"
+    }
+    # winning player should have both cards in his warchest
+    assert_equal(2, player1.number_of_cards)
+    assert_equal(0, player2.number_of_cards)
+    assert_equal(true, player1.warchest?)
+    assert_equal(false, player2.warchest?)
+  end
   def test_player1_wins
     player1=WarPlayer.new([PlayingCard.new('A','C')])
     player2=WarPlayer.new([PlayingCard.new('2','S')])

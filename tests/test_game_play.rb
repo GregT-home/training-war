@@ -10,9 +10,9 @@ class TestGamePlay < MiniTest::Unit::TestCase
     player2=WarPlayer.new
 
     if war.make_war([player1,player2]) == player1
-      print "Player1 won in #{war.iterations_until_won}\n"
+      print "Player1 won in #{war.battle_number}\n"
     else
-      print "Player2 won in #{war.iterations_until_won}\n"
+      print "Player2 won in #{war.battle_number}\n"
     end
   end
 
@@ -24,9 +24,9 @@ class TestGamePlay < MiniTest::Unit::TestCase
       player2=WarPlayer.new
 
       if war.make_war([player1,player2]) == player1
-        print "Player1 won in #{war.iterations_until_won}\n"
+        print "Player1 won in #{war.battle_number}\n"
       else
-        print "Player2 won in #{war.iterations_until_won}\n"
+        print "Player2 won in #{war.battle_number}\n"
       end
     end
 
