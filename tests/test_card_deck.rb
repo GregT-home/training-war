@@ -3,6 +3,17 @@ require 'minitest/autorun'
 #require 'minitest/pride'
 
 class TestCardDeck < MiniTest::Unit::TestCase
+  def test_deck_runs_out
+    test_deck = CardDeck.new
+    player=WarPlayer.new
+    test_deck.deal([player])
+    assert_equal(52, player.number_of_cards)
+
+    52.times { card = player.get_next_card }
+    card = player.get_next_card
+    assert_equal(nil, card)
+  end
+
   def test_deck_shuffle
     test_deck = CardDeck.new
     shuffled_deck = CardDeck.new
@@ -11,10 +22,10 @@ class TestCardDeck < MiniTest::Unit::TestCase
     assert_equal(52, test_deck.number_of_cards)
     assert_equal(52, shuffled_deck.number_of_cards)
     test_deck.deal([player])
-    card = player.take_top_card
+    card = player.get_next_card
     assert(card.is_a?(PlayingCard), "card is not a playing card")
     shuffled_deck.deal([player])
-    card = player.take_top_card
+    card = player.get_next_card
     assert(card.is_a?(PlayingCard), "card is not a playing card")
 
   end

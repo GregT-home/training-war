@@ -1,8 +1,5 @@
 class WarPlayer
-  attr_reader :interactive
-  attr_reader :active_cards
-  attr_reader :won_cards
-  attr_reader :name
+  attr_reader :interactive,  :active_cards, :war_chest,  :name
   @server_fd
 
   @debug=false
@@ -13,34 +10,45 @@ class WarPlayer
   def initialize(active_cards=[], name = "Unnamed Player", interactive=false)
     @name = name
     @active_cards = active_cards
-    @won_cards = []
+    @war_chest = []
     @interactive = interactive
 #    @server_fd = TCPSocket.new("localhost", WarGame_Server::OUR_PORT)
   end
 
-  def number_of_cards
-    @active_cards.length+@won_cards.length
+  # return the next card to play.  If this requires recycling the war_chest, then do it.
+  # return nil if no cards left
+  def get_next_card
+card = @active_cards.pop
+    if card.nil? && war_chest?
+      merge_war_chest_into_cards
+      card = @active_cards.pop
+    end
+    card
   end
 
-  def take_top_card
-    @active_cards.pop
+  def number_of_cards
+    @active_cards.length+@war_chest.length
   end
+
+  # def take_top_card
+  #   @active_cards.pop
+  # end
 
   def receive_card(newcard)
     @active_cards.unshift(newcard)
   end
 
   def wins_card(newcard)
-    @won_cards.unshift(newcard)
+    @war_chest.unshift(newcard)
   end
 
-  def warchest?
-    won_cards != []
+  def war_chest?
+    war_chest != []
   end
   
-  def merge_won_into_cards
-    @active_cards += @won_cards
-    @won_cards -= @won_cards
+  def merge_war_chest_into_cards
+    @active_cards += @war_chest
+    @war_chest -= @war_chest
     shuffle
   end
   
